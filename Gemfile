@@ -172,6 +172,8 @@ group :development do
   gem 'librarian', '>= 0.0.25', require: false
   # https://github.com/ctran/annotate_models/pull/106
   gem 'annotate', :git => 'https://github.com/SamSaffron/annotate_models.git'
+  # meta_request is required for using RailsPanel plugin in chrome dev tools
+  gem 'meta_request'
 end
 
 
