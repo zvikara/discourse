@@ -7,6 +7,7 @@
 # to copy just the required javascript files
 # from vendor/assets/bower_components to vendor/assets/javascripts
 # This also keeps the same file names an location for backward compatibility.
+# This tasks uses config/bower.yaml for list of files to copy.
 
 #require 'bower-rails'
 namespace :bower do
@@ -15,20 +16,21 @@ namespace :bower do
     source_dir = Rails.root.join("vendor", "assets", "bower_components")
     scripts_dir = Rails.root.join("vendor", "assets", "javascripts")
     styles_dir = Rails.root.join("vendor", "assets", "stylesheets")
-
-    files = HashWithIndifferentAccess.new(YAML.load_file(Rails.root.join('vendor', 'assets', 'bower.yaml')))
+    config_file = Rails.root.join("config", "bower.yaml")
+    files = HashWithIndifferentAccess.new(YAML.load_file(config_file))
     files.each do |source, target|
       target = target || File.basename(source)
+      source = File.join(File.basename(source, ".*"), source) unless source.include?("/")
       #puts "#{source} => #{target}\n"
       case File.extname(target)
       when ".js", ".coffee"
-        puts "script: #{target}"
+        puts "script: #{source} => #{target}"
         target = File.join(scripts_dir, target)
       when ".css", ".scss"
-        puts "style : #{target}"
+        puts "style : #{source} => #{target}"
         target = File.join(styles_dir, target)
       else
-        puts "ignore: #{target}"
+        puts "ignore: #{source} => #{target}"
         target = nil
       end
       if target
