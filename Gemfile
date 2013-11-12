@@ -187,6 +187,9 @@ gem 'unicorn', require: false
 gem 'puma', require: false
 gem 'rbtrace', require: false
 
+# bower javascript package manager
+gem 'bower-rails', '~> 0.5.0'
+
 # perftools only works on 1.9 atm
 group :profile do
   # travis refuses to install this, instead of fuffing, just avoid it for now
